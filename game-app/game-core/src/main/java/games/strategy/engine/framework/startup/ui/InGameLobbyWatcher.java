@@ -126,7 +126,6 @@ public class InGameLobbyWatcher {
     }
 
     gameId = gamePostingResponse.getGameId();
-
     // Period time is chosen to less than half the keep-alive cut-off time. In case a keep-alive
     // message is lost or missed, we have time to send another one before reaching the cut-off time.
     keepAliveTimer =
@@ -183,6 +182,8 @@ public class InGameLobbyWatcher {
       return Optional.of(
           new InGameLobbyWatcher(
               serverMessenger, gameToLobbyConnection, watcherThreadMessaging, oldWatcher, isHuman));
+    } catch(NullPointerException e){
+      return e;
     } catch (final Exception e) {
       log.error("Failed to create in-game lobby watcher", e);
       return Optional.empty();
